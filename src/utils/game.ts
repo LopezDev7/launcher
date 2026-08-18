@@ -82,7 +82,6 @@ export const startGame = async (
           }:${nickname}:${password}`
         : `connect:${await getIpAddress(server.ip)}:${server.port}:${nickname}`,
     });
-    useSettings.getState().addRecentNickname(nickname);
     return;
   }
 
@@ -217,8 +216,8 @@ export const startGame = async (
     sampVersion === "custom"
       ? idealSAMPDllPath
       : file
-        ? await getLocalPath(file.path, file.name)
-        : idealSAMPDllPath;
+      ? await getLocalPath(file.path, file.name)
+      : idealSAMPDllPath;
 
   invoke("inject", {
     name: nickname,
@@ -233,7 +232,6 @@ export const startGame = async (
     .then(() => {
       addToRecentlyJoined(server);
       setSelected(undefined);
-      useSettings.getState().addRecentNickname(nickname);
     })
     .catch((e) => {
       if (e === "need_admin") {
